@@ -1,0 +1,37 @@
+profiles:
+  cpu_only:
+    cpu:
+      model: "Xeon Gold 6142"
+      power: 9.4  # W per core
+      nunits: 2
+  gpu_standard:
+    gpu:
+      model: "NVIDIA RTX 3090"
+      power: 350
+      nunits: 1
+    cpu:
+      model: "AMD Ryzen 9"
+      power: 10.5
+      nunits: 1
+  gpu_high_end:
+    gpu:
+      model: "NVIDIA A100-SXM-80GB"
+      power: 400
+      nunits: 2
+    cpu:
+      model: "AMD EPYC 7763"
+      power: 4.4
+      nunits: 1
+  ml_training:
+    gpu:
+      model: "NVIDIA H100"
+      power: 700
+      nunits: 4
+    cpu:
+      model: "Intel Xeon Platinum"
+      power: 8.0
+      nunits: 2
+
+# Power Usage Effectiveness (data center overhead)
+# 1.0 = no overhead, typical is 1.2-1.5
+PUE: 1.2
