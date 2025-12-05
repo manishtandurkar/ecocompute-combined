@@ -409,7 +409,6 @@ def main():
         "📊 Dashboard",
         "🌍 Schedule Job",
         "📋 Job Queue",
-        "📈 Analytics",
         "🌐 Region Comparison"
     ])
     
@@ -757,52 +756,8 @@ def main():
                 else:
                     st.info(f"No {status} jobs")
     
-    # TAB 4: Analytics
+    # TAB 4: Region Comparison
     with tabs[3]:
-        st.subheader("📈 Emissions Analytics")
-        
-        emissions = scheduler.emissions_tracker.get_emissions_summary()
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            fig = go.Figure(data=[go.Indicator(
-                mode="number+delta",
-                value=emissions['total_emissions_kg'] * 1000,
-                title="Total CO₂ Tracked (grams)",
-                number={'suffix': 'g'}
-            )])
-            fig.update_layout(height=250)
-            st.plotly_chart(fig, use_container_width=True)
-        
-        with col2:
-            if emissions['total_jobs'] > 0:
-                fig = go.Figure(data=[go.Indicator(
-                    mode="gauge+number",
-                    value=emissions['avg_emissions_per_job_kg'] * 1000,
-                    title="Avg CO₂ per Job (g)",
-                    gauge={'axis': {'range': [0, 500]}}
-                )])
-                fig.update_layout(height=250)
-                st.plotly_chart(fig, use_container_width=True)
-        
-        # Emissions log
-        log = scheduler.emissions_tracker.emissions_log
-        if log:
-            st.subheader("Emissions History")
-            df = pd.DataFrame(log)
-            if 'timestamp' in df.columns:
-                df['timestamp'] = pd.to_datetime(df['timestamp'])
-                df = df.sort_values('timestamp')
-                
-                fig = px.line(
-                    df, x='timestamp', y='emissions_kg_co2',
-                    title="Emissions Over Time",
-                    markers=True
-                )
-                st.plotly_chart(fig, use_container_width=True)
-    
-    # TAB 5: Region Comparison
-    with tabs[4]:
         st.subheader("🌍 Multi-Region Carbon Intensity")
         
         regions_list = ["IN", "US", "DE", "NO", "AU", "GB", "FR"]
